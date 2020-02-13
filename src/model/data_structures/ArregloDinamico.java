@@ -71,6 +71,7 @@ public class  ArregloDinamico<T extends Comparable<T>> implements IArregloDinami
 				if(dato.compareTo(darElemento(i)) == 0)
 				{
 					rta = darElemento(i);
+					break;
 				}
 			}
 			return rta;

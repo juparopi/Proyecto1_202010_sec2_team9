@@ -66,9 +66,12 @@ public class JsonGsonProcessing
 	
 	
 	
-	private IStack<Comparendo> stack;
-	private IQueue<Comparendo> queue;
-	
+	private IArregloDinamico<Comparendo> arreglo;
+	private Comparendo comparendoConMayorObjectId;
+	private double minLon = 0.0000000000001;
+	private double minLat;
+	private double maxLon;
+	private double maxLat;
 	
 	/** Metodo constructor */
 	public JsonGsonProcessing(String rutaArchivo)
@@ -403,29 +406,61 @@ public class JsonGsonProcessing
 	{   
 		Comparendo rta = new Comparendo(objectId, localidad, longitud, latitud,fecha,claseVehi,tipoServi,infra);
 		System.out.println("Crear comparendo con: ObjectId: " + objectId + ", Localidad: " + localidad + ", (Long: " + longitud + ", Lat: " + latitud + "), Fecha :"+fecha+", Clase Vehiculo :"+claseVehi+", Tipo Servicio : "+tipoServi+", Inraccion : "+infra);
-		
+		int maxObj = 0;
+		if(objectId > maxObj)
+		{
+			comparendoConMayorObjectId = rta;
+			maxObj = objectId;
+		}
+		if(minLon == 0.0000000000001)
+		{
+			minLat = latitud;
+			minLon = longitud;
+			maxLon = longitud;
+			maxLat = latitud;
+		}
+		else
+		{
+			if(longitud>maxLon)maxLon=longitud;
+			if(longitud<minLon)minLon=longitud;
+			if(latitud>maxLat)maxLat=latitud;
+			if(latitud<minLat)minLon=latitud;
+		}
 		leyendoPropiedades = false;
 		leyendoGeometria = false;
 		crearObjComparendo = false;
-		stack.push(rta);
-		queue.enqueue(rta);;
+		arreglo.agregar(rta);
 	}
 	
-	public IStack<Comparendo> darStack()
+	public IArregloDinamico<Comparendo> darArreglo()
 	{
-		return stack;
+		return arreglo;
 	}
-	public IQueue<Comparendo> darQueue()
+	public Comparendo darComparendoMayorOb()
 	{
-		return queue;
+		return comparendoConMayorObjectId;
 	}
-	
-	public void iniciarLectura(JsonGsonProcessing objetoJsonGson, IStack<Comparendo> pStack, IQueue<Comparendo> pQueue)
+	public double darMaxLat()
 	{
-		stack = pStack;
-		queue = pQueue;
-		// Inicializar el objeto de procesamiento con el nombre del archivo JSON o comparendos GEOJSON 
+		return maxLat;
+	}
+	public double darMaxLon()
+	{
+		return maxLon;
+	}
+	public double darMinLat()
+	{
+		return minLat;
+	}
+	public double darMinLon()
+	{
+		return minLon;
+	}
+	public void iniciarLectura(JsonGsonProcessing objetoJsonGson, IArregloDinamico<Comparendo> pArreglo)
+	{
+		// Inicializar el objeto de procesamiento con el nombre del archivo JSON o comparendos GEOJSON \
 
+		arreglo = pArreglo;
 		objetoJsonGson.processingJSONFile();
 	}
 

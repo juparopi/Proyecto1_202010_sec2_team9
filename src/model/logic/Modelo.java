@@ -1,5 +1,6 @@
 package model.logic;
 
+import com.sun.javafx.geom.Area;
 import com.sun.media.sound.AlawCodec;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
@@ -20,70 +21,62 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IStack<Comparendo> stack;
-	private IQueue<Comparendo> queue;
+	private IArregloDinamico<Comparendo> arreglo;
 	
+	private Comparendo comparendoConMaxObj;
+	
+	private double minLat;
+	private double minLon;
+	private double maxLat;
+	private double maxLon;
 	
 	/**
 	 * Constructor del modelo del mundo
 	 */
 	public Modelo()
 	{
-		queue = new Queue();
-		stack = new Stack();
+		arreglo = new ArregloDinamico<Comparendo>(10);
 	}
 	
 	public void cargarDatos(String ruta)
 	{
 		JsonGsonProcessing objetoJsonGson = new JsonGsonProcessing( ruta);
-		objetoJsonGson.iniciarLectura(objetoJsonGson, stack,queue);
-		stack = objetoJsonGson.darStack();
-		queue = objetoJsonGson.darQueue();
+		objetoJsonGson.iniciarLectura(objetoJsonGson, arreglo);
+		comparendoConMaxObj = objetoJsonGson.darComparendoMayorOb();
+		minLat = objetoJsonGson.darMinLat();
+		minLon = objetoJsonGson.darMinLon();
+		maxLat = objetoJsonGson.darMaxLat();
+		maxLon = objetoJsonGson.darMaxLon();
+		
 	}
 	
-	public IStack<Comparendo> darStack()
+	public IArregloDinamico<Comparendo> darArreglo()
 	{
-		return stack;
+		return arreglo;
+	}
+	public Comparendo darComparendoConMaxObj()
+	{
+		return comparendoConMaxObj;
+	}
+	public double darMaxLat()
+	{
+		return maxLat;
+	}
+	public double darMaxLon()
+	{
+		return maxLon;
+	}
+	public double darMinLat()
+	{
+		return minLat;
+	}
+	public double darMinLon()
+	{
+		return minLon;
 	}
 	
-	public IQueue<Comparendo> darQueue()
-	{
-		return queue;
-	}
+		
 	
-	public IQueue<Comparendo> requerimiento2()
-	{
-		IQueue<Comparendo> maximos = new Queue();
-		IQueue<Comparendo> analizada = new Queue();
-		int max = 0;
-		int numAna = 1;
-		String infraccionAna = queue.peek().darInfraccion();
-		while(queue.isEmpty() == false)
-		{
-			Comparendo comparendo = queue.dequeue();
-			if (comparendo.darInfraccion().equals(infraccionAna))
-			{
-				analizada.enqueue(comparendo);
-				numAna++;
-			}
-			else 
-			{
-				if(numAna>max)
-				{
-					maximos = analizada;
-					max = numAna;
-					analizada = new Queue();
-					infraccionAna = comparendo.darInfraccion();
-					analizada.enqueue(comparendo);
-					numAna++;
-				}
-			}
-		}
-		if(numAna>max)
-		{
-			maximos = analizada;
-		}
-		return maximos;
-	}
+	
 
 }

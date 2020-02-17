@@ -78,5 +78,45 @@ public class Modelo {
 		
 	
 	
+	
+	
+	
+	//Comparendos por llenar
+	
+	/**
+	 * 3 de Jaime
+	 */
+	
+	
+	public Comparendo darPrimerComparendoXInfracc(String infracc)
+	{
+		return null;
+	}
+	public IArregloDinamico darComparendosXInfracc(String infracc)
+	{
+		return null;
+	}
+	
+	public IArregloDinamico darComparendosXTipoServi()
+	{
+		return null;
+	}
+	
+	/**
+	 * Metodos parte grupal
+	 */
+	
+	
+	public IArregloDinamico darComparendosXLocalidadYFechas(String locali, String fechaMin, String fechaMax)
+	{
+		return null;
+	}
+	
+	public IArregloDinamico darNMayoresInfracc(int N, String fechaMin, String fechaMax)
+	{
+		return null;
+	}
+	
+	
 
 }

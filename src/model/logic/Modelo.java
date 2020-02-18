@@ -83,10 +83,19 @@ public class Modelo {
 	
 	//Comparendos por llenar
 	
-	/**
-	 * 3 de Jaime
-	 */
+	public Comparendo darPrimerComparendoXLocalidad(String localidad){
+		return null;
+	}
 	
+	public IArregloDinamico darComparendosXLocalidad(String localidad){
+		return null;
+	}
+	
+	public IArregloDinamico compararComparendosXFecha(String fecha1, String fecha2){
+		return null;
+	}
+
+
 	
 	public Comparendo darPrimerComparendoXInfracc(String infracc)
 	{
@@ -117,6 +126,9 @@ public class Modelo {
 		return null;
 	}
 	
+	public IArregloDinamico darHist(){
+		return null;
+	}
 	
 
 }

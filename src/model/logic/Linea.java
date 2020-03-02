@@ -17,6 +17,14 @@ public class Linea implements Comparable<Linea>
 	{
 		return infraccion;
 	}
+	public int darParticular()
+	{
+		return particular;
+	}
+	public int darPublico()
+	{
+		return publico;
+	}
 	public void aumentarValor(String parOpubl)
 	{
 		if(parOpubl.equals("Particular"))

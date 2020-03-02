@@ -10,6 +10,7 @@ import model.data_structures.IQueue;
 import model.data_structures.ListaEncadenada;
 import model.data_structures.NodoLista;
 import model.logic.Comparendo;
+import model.logic.Linea;
 import model.logic.Modelo;
 import view.View;
 
@@ -101,6 +102,15 @@ public class Controller {
 					}
 					break;
 				case 7:
+					view.printMessage("--------- \nComparación de comparendos por Infracción en servicio Particular y servicio Público");
+					ListaEncadenada<Linea> lista = new ListaEncadenada<Linea>();
+					view.printMessage("\nInfracción\tParticular\tPúblico\t");
+					NodoLista<Linea> nod = lista.darPrimero();
+					for(int i = 0; i < lista.darTamano(); i++)
+					{
+						view.printMessage("\n"+nod.darElemento().darInfraccion()+"\t"+nod.darElemento().darParticular()+"\t"+nod.darElemento().darPublico());
+						nod = nod.darSiguiente();
+					}
 					
 					break;
 

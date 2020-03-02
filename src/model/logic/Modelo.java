@@ -165,9 +165,39 @@ public class Modelo {
 	 */
 	
 	
-	public IArregloDinamico darComparendosXLocalidadYFechas(String locali, String fechaMin, String fechaMax)
+	public ListaEncadenada darComparendosXLocalidadYFechas(String locali, String fechaMin, String fechaMax)
 	{
-		return null;
+		ListaEncadenada<Linea2> lista = new ListaEncadenada<Linea2>();
+		Linea2.ComparadorCompxInfracc compxInfr = new Linea2.ComparadorCompxInfracc();
+		for(int i = 0; i < arreglo.darTamano(); i++)
+		{
+			if((arreglo.darElemento(i).darFecha().compareTo(fechaMin) > 0 && arreglo.darElemento(i).darFecha().compareTo(fechaMax) <0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMin) == 0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMax)==0))  
+			{
+				if(lista.darPrimero() == null)
+				{
+					Linea2 lin = new Linea2(arreglo.darElemento(i).darInfraccion());
+					lin.aumentarCantidad();
+					lista.agregar(lin);
+				}
+				else
+				{
+					Linea2 busq = new Linea2(arreglo.darElemento(i).darInfraccion());
+					Linea2 lin = lista.buscar(busq);
+					if(lin == null)
+					{
+						busq.aumentarCantidad();
+						lista.agregarEnOrden(busq, compxInfr);
+					}
+					else
+					{
+						lin.aumentarCantidad();
+						lista.agregarEnOrden(lin, compxInfr);
+					}
+				}
+			}
+		}
+		
+		return lista;
 	}
 	
 	public IArregloDinamico darNMayoresInfracc(int N, String fechaMin, String fechaMax)

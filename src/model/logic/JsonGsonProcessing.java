@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
+import model.data_structures.IArregloDinamico;
 import model.data_structures.IListaEncadenada;
 import model.data_structures.ListaEncadenada;
 	 
@@ -61,10 +62,12 @@ public class JsonGsonProcessing
 	private double longitud;				// valor de longitud geografica
 	private double latitud;					// valor de latitud geografica
 	
-	
-	
-	private IListaEncadenada<Comparendo> lista;
-	
+	private IArregloDinamico<Comparendo> arreglo;
+	private Comparendo comparendoConMayorObjectId;
+	private double minLon = 0.0000000000001;
+	private double minLat;
+	private double maxLon;
+	private double maxLat;	
 	
 	/** Metodo constructor */
 	public JsonGsonProcessing(String rutaArchivo)
@@ -328,21 +331,60 @@ public class JsonGsonProcessing
 	public void crearComparendo()
 	{   
 		Comparendo rta = new Comparendo(objectId, localidad, longitud, latitud,fecha,claseVehi,tipoServi,infra);
+		int maxObj = 0;
+		if(objectId > maxObj)
+		{
+			comparendoConMayorObjectId = rta;
+			maxObj = objectId;
+		}
+		if(minLon == 0.0000000000001)
+		{
+			minLat = latitud;
+			minLon = longitud;
+			maxLon = longitud;
+			maxLat = latitud;
+		}
+		else
+		{
+			if(longitud>maxLon)maxLon=longitud;
+			if(longitud<minLon)minLon=longitud;
+			if(latitud>maxLat)maxLat=latitud;
+			if(latitud<minLat)minLon=latitud;
+		}
 		
 		leyendoPropiedades = false;
 		leyendoGeometria = false;
 		crearObjComparendo = false;
-		lista.agregar(rta);
+		arreglo.agregar(rta);
 	}
 	
-	public IListaEncadenada<Comparendo> darLista()
+	public IArregloDinamico<Comparendo> darArreglo()
 	{
-		return lista;
+		return arreglo;
 	}
-	
-	public void iniciarLectura(JsonGsonProcessing objetoJsonGson, IListaEncadenada<Comparendo> pLista)
+	public Comparendo darComparendoMayorOb()
 	{
-		lista =pLista;
+		return comparendoConMayorObjectId;
+	}
+	public double darMaxLat()
+	{
+		return maxLat;
+	}
+	public double darMaxLon()
+	{
+		return maxLon;
+	}
+	public double darMinLat()
+	{
+		return minLat;
+	}
+	public double darMinLon()
+	{
+		return minLon;
+	}
+	public void iniciarLectura(JsonGsonProcessing objetoJsonGson, IArregloDinamico<Comparendo> pArreglo)
+	{
+		arreglo = pArreglo;
 		// Inicializar el objeto de procesamiento con el nombre del archivo JSON o comparendos GEOJSON 
 
 		objetoJsonGson.processingJSONFile();

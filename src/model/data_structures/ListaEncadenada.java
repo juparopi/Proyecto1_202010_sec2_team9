@@ -1,5 +1,9 @@
 package model.data_structures;
 
+import java.util.Comparator;
+
+import model.logic.Comparendo;
+
 /**
  * 2019-01-23
  * Estructura de Datos Arreglo Dinamico de Strings.
@@ -45,6 +49,40 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
                }
                tamano++;
        }
+		
+		public void agregarEnOrden(T dato, Comparator<T> comparador)
+		{
+			NodoLista<T> nuevo = new NodoLista<T>(dato);
+            if(primero == null)
+            {
+         	   primero = nuevo;
+         	   ultimo = nuevo;
+            }
+            else
+            {
+            	boolean agregado = false;
+            	NodoLista<T> nodo = primero;
+         	   	while(nodo.darSiguiente() != null)
+         	   	{
+         	   		if(comparador.compare(nodo.darSiguiente().darElemento(), dato) <0 )
+         	   		{
+         	   			nodo = nodo.darSiguiente();
+         	   		}
+         	   		else
+         	   		{
+         	   			nuevo.cambiarSiguiente(nodo.darSiguiente());
+         	   			nodo.cambiarSiguiente(nuevo);
+         	   			agregado = true;
+         	   			break;
+         	   		}
+         	   	}
+         	   	if(agregado == false)
+         	   	{
+         	   		nodo.cambiarSiguiente(nuevo);
+         	   	}
+            }
+            tamano++;
+		}
 
 		public NodoLista<T> darPrimero() 
 		{

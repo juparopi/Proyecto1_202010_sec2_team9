@@ -7,6 +7,8 @@ import javax.swing.JFileChooser;
 import java.io.*;
 
 import model.data_structures.IQueue;
+import model.data_structures.ListaEncadenada;
+import model.data_structures.NodoLista;
 import model.logic.Comparendo;
 import model.logic.Modelo;
 import view.View;
@@ -54,6 +56,51 @@ public class Controller {
 					break;
 
 				case 2:
+					
+					break;
+					
+
+				case 3:
+					
+					break;
+					
+				case 4:
+					
+					break;
+
+				case 5:
+					view.printMessage("--------- \nInserte la infracción que desea buscar: ");
+					String infracc = lector.nextLine();
+					Comparendo comp = modelo.darPrimerComparendoXInfracc(infracc);
+					if( comp == null)
+					{
+						view.printMessage("\n No se encontró ningun comparendo con la infracción "+infracc);
+					}
+					else
+					{
+						view.printMessage("\n Primer comparendo con la infracción "+infracc+" es:");
+						view.printMessage("\n"+comp.darObjectId()+", Fecha :"+comp.darFecha()+", Infraccion : "+comp.darInfraccion()+", Clase Vehiculo :"+comp.darClaseVehi()+", Tipo Servicio : "+comp.darTipoServi()+", localidad = "+comp.darLocalidad());
+					}
+					break;
+
+				case 6:
+					view.printMessage("--------- \nInserte la infracción que desea buscar: ");
+					infracc = lector.nextLine();
+					ListaEncadenada<Comparendo> list = modelo.darComparendosXInfracc(infracc);
+					view.printMessage("\nHay un total de "+list.darTamano()+" comparendos con la infracción "+infracc);
+					if(list.darPrimero()!= null)
+					{
+						view.printMessage(" y son:");
+						NodoLista<Comparendo> nodo = list.darPrimero();
+						for(int i = 0; i < list.darTamano(); i++)
+						{	
+							comp = nodo.darElemento();
+							view.printMessage("\n"+comp.darObjectId()+", Fecha :"+comp.darFecha()+", Infraccion : "+comp.darInfraccion()+", Clase Vehiculo :"+comp.darClaseVehi()+", Tipo Servicio : "+comp.darTipoServi()+", localidad = "+comp.darLocalidad());
+							nodo = nodo.darSiguiente();
+						}
+					}
+					break;
+				case 7:
 					
 					break;
 

@@ -1,5 +1,7 @@
 package model.logic;
 
+import java.util.Comparator;
+
 public class Comparendo implements Comparable<Comparendo>
 {
 	/**
@@ -100,5 +102,12 @@ public class Comparendo implements Comparable<Comparendo>
 	public int compareTo(Comparendo o) 
 	{
 		return (o.darObjectId()-objectId);
+	}
+	
+	public static class ComparadorCompxFecha implements Comparator<Comparendo>
+	{
+		public int compare(Comparendo comp1, Comparendo comp2) {
+			return comp1.darFecha().compareTo(comp2.darFecha());
+		}	
 	}
 }

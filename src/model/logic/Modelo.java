@@ -1,5 +1,7 @@
 package model.logic;
 
+import java.util.Comparator;
+
 import com.sun.javafx.geom.Area;
 import com.sun.media.sound.AlawCodec;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
@@ -10,6 +12,7 @@ import model.data_structures.IListaEncadenada;
 import model.data_structures.IQueue;
 import model.data_structures.IStack;
 import model.data_structures.ListaEncadenada;
+import model.data_structures.NodoLista;
 import model.data_structures.Queue;
 import model.data_structures.Stack;
 
@@ -21,7 +24,7 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico<Comparendo> arreglo;
+	private ArregloDinamico<Comparendo> arreglo;
 	
 	private Comparendo comparendoConMaxObj;
 	
@@ -99,16 +102,62 @@ public class Modelo {
 	
 	public Comparendo darPrimerComparendoXInfracc(String infracc)
 	{
-		return null;
+		Comparendo rta = null;
+		for(int i = 0; i < arreglo.darCapacidad();i++)
+		{
+			
+			if(arreglo.darElemento(i).darInfraccion().equals(infracc))
+			{
+				rta = arreglo.darElemento(i);
+			}
+		}
+		return rta;
 	}
-	public IArregloDinamico darComparendosXInfracc(String infracc)
+	public ListaEncadenada darComparendosXInfracc(String infracc)
 	{
-		return null;
+		ListaEncadenada<Comparendo> lista = new ListaEncadenada<Comparendo>();
+		Comparendo.ComparadorCompxFecha compxFech = new Comparendo.ComparadorCompxFecha();
+		for(int i = 0; i < arreglo.darCapacidad();i++)
+		{
+			if(arreglo.darElemento(i).darInfraccion().equals(infracc))
+			{
+				lista.agregarEnOrden(arreglo.darElemento(i), compxFech);
+			}
+		}
+		
+		return lista;
 	}
 	
-	public IArregloDinamico darComparendosXTipoServi()
+	public ListaEncadenada darComparendosXTipoServi()
 	{
-		return null;
+		ListaEncadenada<Linea> lista = new ListaEncadenada<Linea>();
+		Linea.ComparadorCompxInfracc compxInfr = new Linea.ComparadorCompxInfracc();
+		for(int i = 0; i < arreglo.darTamano(); i++)
+		{
+			if(lista.darPrimero() == null)
+			{
+				Linea lin = new Linea(arreglo.darElemento(i).darInfraccion());
+				lin.aumentarValor(arreglo.darElemento(i).darTipoServi());
+				lista.agregar(lin);
+			}
+			else
+			{
+				Linea busq = new Linea(arreglo.darElemento(i).darInfraccion());
+				Linea lin = lista.buscar(busq);
+				if(lin == null)
+				{
+					busq.aumentarValor(arreglo.darElemento(i).darTipoServi());
+					lista.agregarEnOrden(busq, compxInfr);
+				}
+				else
+				{
+					lin.aumentarValor(arreglo.darElemento(i).darTipoServi());
+					lista.agregarEnOrden(lin, compxInfr);
+				}
+			}
+		}
+		
+		return lista;
 	}
 	
 	/**

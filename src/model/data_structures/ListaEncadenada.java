@@ -95,6 +95,49 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
             tamano++;
 		}
 		
+		public void agregarEnOrdenD(T dato, Comparator<T> comparador)
+		{
+			NodoLista<T> nuevo = new NodoLista<T>(dato);
+            if(primero == null)
+            {
+         	   primero = nuevo;
+         	   ultimo = nuevo;
+            }
+            else
+            {
+            	boolean agregado = false;
+            	if(comparador.compare(primero.darElemento(), nuevo.darElemento()) <0)
+            	{
+            		nuevo.cambiarSiguiente(primero);
+            		primero = nuevo;
+            		agregado = true;
+            	}
+            	else
+            	{
+            		NodoLista<T> actual = primero;
+            		while(actual.darSiguiente()!=null)
+            		{
+            			if(comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())<0)
+            			{
+            				nuevo.cambiarSiguiente(actual.darSiguiente());
+            				actual.cambiarSiguiente(nuevo);
+            				agregado = true;
+            			}
+            			else
+            			{
+            				actual = actual.darSiguiente();
+            			}
+            		}
+            	}
+            	if(agregado == false)
+            	{
+            		ultimo.cambiarSiguiente(nuevo);
+            		ultimo = ultimo.darSiguiente();
+            	}
+            }
+            tamano++;
+		}
+		
 
 		public NodoLista<T> darPrimero() 
 		{

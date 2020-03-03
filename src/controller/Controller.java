@@ -61,7 +61,7 @@ public class Controller {
 
 				case 2:
 					view.printMessage("--------- \nInserte la localidad que desea buscar: ");
-					String loc = lector.nextLine();
+					String loc = lector.next();
 					Comparendo comp1 = modelo.darPrimerComparendoXLocalidad(loc);
 					if( comp1 == null)
 					{
@@ -76,12 +76,12 @@ public class Controller {
 
 				case 3:
 					view.printMessage("--------- \nInserte la fecha para la que desea encontrar infracciones: ");
-					String fecha = lector.nextLine();
+					String fecha = lector.next();
 					ListaEncadenada<Comparendo> lista = modelo.darComparendosXFecha(fecha);
 					view.printMessage("\nHay un total de "+lista.darTamano()+" comparendos con la fecha "+fecha);
 					if(lista.darPrimero()!= null)
 					{
-						view.printMessage(" y son: ");
+						System.out.print(" y son: ");
 						NodoLista<Comparendo> nodo = lista.darPrimero();
 						for(int i = lista.darTamano() - 1; i >= 0; i--)
 						{	
@@ -94,9 +94,9 @@ public class Controller {
 
 				case 4:
 					view.printMessage("--------- \nInserte la primera fecha para la cual desea comparar los tipos de comparendo: ");
-					String fecha1 = lector.nextLine();
+					String fecha1 = lector.next();
 					view.printMessage("--------- \nInserte la segunda fecha para la cual desea comparar los tipos de comparendo: ");
-					String fecha2 = lector.nextLine();
+					String fecha2 = lector.next();
 					ListaEncadenada<Comparendo> l1 = modelo.darComparendosXFecha(fecha1);
 					ListaEncadenada<Comparendo> l2 = modelo.darComparendosXFecha(fecha2);
 					if(l1.darPrimero() != null || l2.darPrimero() != null){

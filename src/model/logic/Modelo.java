@@ -100,7 +100,7 @@ public class Modelo {
 		Comparendo.ComparadorCompxCodigo compxCod = new Comparendo.ComparadorCompxCodigo();
 		for(int i = 0; i < arreglo.darTamano(); i++){
 			if(arreglo.darElemento(i).darFecha().equalsIgnoreCase(fecha))
-				lista.agregarEnOrdenA(arreglo.darElemento(i), compxCod);
+				lista.agregarEnOrdenD(arreglo.darElemento(i), compxCod);
 		}
 			
 		return lista;

@@ -138,7 +138,7 @@ public class Modelo {
 	{
 		ListaEncadenada<Comparendo> lista = new ListaEncadenada<Comparendo>();
 		Comparendo.ComparadorCompxFecha compxFech = new Comparendo.ComparadorCompxFecha();
-		for(int i = 0; i < arreglo.darCapacidad();i++)
+		for(int i = 0; i < arreglo.darTamano();i++)
 		{
 			if(arreglo.darElemento(i).darInfraccion().equals(infracc))
 			{

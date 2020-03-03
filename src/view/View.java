@@ -20,11 +20,10 @@ public class View
 			System.out.println("4. Comparar tipos de comparendos en dos fechas dadas");
 			System.out.println("5. Buscar el primer comparendo por infracción dada");
 			System.out.println("6. Consultar todos los comparendos con una infracción dada");
-			System.out.println("7. Comparar tipos de comparendos para dos códigos dados");
-			System.out.println("8. Mostrar cantidades de cada tipo de comparendo entre dos fechas dadas");
-			System.out.println("9. Comparar tipos de comparendos en dos fechas dadas");
-			System.out.println("10. Consultar información de los N códigos con más infracciones en un periodo de tiempo dado");
-			System.out.println("11. Hacer un histograma con el número total de comparendos por localidad");
+			System.out.println("7. Mostrar cantidades de cada tipo de comparendo entre dos fechas dadas");
+			System.out.println("8. Comparar tipos de comparendos en dos fechas dadas");
+			System.out.println("9. Consultar información de los N códigos con más infracciones en un periodo de tiempo dado");
+			System.out.println("10. Hacer un histograma con el número total de comparendos por localidad");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}
 

@@ -111,7 +111,7 @@ public class Modelo {
 		Comparendo.ComparadorCompxFecha compxFech = new Comparendo.ComparadorCompxFecha();
 		for(int i = 0; i < arreglo.darCapacidad();i++)
 		{
-			if(arreglo.darElemento(i).darLocalidad().equals(loc))
+			if(arreglo.darElemento(i).darLocalidad().equalsIgnoreCase(loc))
 			{
 				lista.agregarEnOrdenA(arreglo.darElemento(i), compxFech);
 			}

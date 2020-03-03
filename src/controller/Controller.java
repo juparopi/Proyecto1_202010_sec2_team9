@@ -224,7 +224,7 @@ public class Controller {
 					NodoLista<Linea2> nodo = lista2.darPrimero();
 					for(int i = 0; i < lista2.darTamano(); i++)
 					{
-						view.printMessage("\n"+nodo.darElemento().darInfraccion()+"\t\t|"+nodo.darElemento().darCantidad());
+						view.printMessage(nodo.darElemento().darInfraccion()+"\t\t|"+nodo.darElemento().darCantidad());
 						nodo = nodo.darSiguiente();
 					}
 					
@@ -242,7 +242,7 @@ public class Controller {
 					nodo = lista2.darPrimero();
 					for(int i = 0; i < lista2.darTamano(); i++)
 					{
-						view.printMessage("\n"+nodo.darElemento().darInfraccion()+"\t|"+nodo.darElemento().darCantidad());
+						view.printMessage(nodo.darElemento().darInfraccion()+"\t|"+nodo.darElemento().darCantidad());
 						nodo = nodo.darSiguiente();
 					}
 					break;

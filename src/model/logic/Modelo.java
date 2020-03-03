@@ -121,7 +121,7 @@ public class Modelo {
 		{
 			if(arreglo.darElemento(i).darInfraccion().equals(infracc))
 			{
-				lista.agregarEnOrden(arreglo.darElemento(i), compxFech);
+				lista.agregarEnOrdenA(arreglo.darElemento(i), compxFech);
 			}
 		}
 		
@@ -131,32 +131,22 @@ public class Modelo {
 	public ListaEncadenada darComparendosXTipoServi()
 	{
 		ListaEncadenada<Linea> lista = new ListaEncadenada<Linea>();
-		Linea.ComparadorCompxInfracc compxInfr = new Linea.ComparadorCompxInfracc();
-		for(int i = 0; i < arreglo.darTamano(); i++)
+		Linea.ComparadorCompxInfracc comparador = new Linea.ComparadorCompxInfracc();
+		
+		for(int i = 0; i<arreglo.darTamano();i++)
 		{
-			if(lista.darPrimero() == null)
+			Linea lineaBusqueda = new Linea(arreglo.darElemento(i).darInfraccion());
+			Linea lineaEncontrada = lista.buscar(lineaBusqueda);
+			if(lineaEncontrada ==null)
 			{
-				Linea lin = new Linea(arreglo.darElemento(i).darInfraccion());
-				lin.aumentarValor(arreglo.darElemento(i).darTipoServi());
-				lista.agregar(lin);
+				lineaBusqueda.aumentarValor(arreglo.darElemento(i).darTipoServi());
+				lista.agregarEnOrdenA(lineaBusqueda, comparador);
 			}
 			else
 			{
-				Linea busq = new Linea(arreglo.darElemento(i).darInfraccion());
-				Linea lin = lista.buscar(busq);
-				if(lin == null)
-				{
-					busq.aumentarValor(arreglo.darElemento(i).darTipoServi());
-					lista.agregarEnOrden(busq, compxInfr);
-				}
-				else
-				{
-					lin.aumentarValor(arreglo.darElemento(i).darTipoServi());
-					lista.agregarEnOrden(lin, compxInfr);
-				}
+				lineaEncontrada.aumentarValor(arreglo.darElemento(i).darTipoServi());
 			}
 		}
-		
 		return lista;
 	}
 	
@@ -169,6 +159,44 @@ public class Modelo {
 	{
 		ListaEncadenada<Linea2> lista = new ListaEncadenada<Linea2>();
 		Linea2.ComparadorCompxInfracc compxInfr = new Linea2.ComparadorCompxInfracc();
+		for(int i = 0; i < arreglo.darTamano(); i++)
+		{
+			if(arreglo.darElemento(i).darLocalidad().equals(locali))
+			{
+				if((arreglo.darElemento(i).darFecha().compareTo(fechaMin) > 0 && arreglo.darElemento(i).darFecha().compareTo(fechaMax) <0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMin) == 0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMax)==0))  
+				{
+					if(lista.darPrimero() == null)
+					{
+						Linea2 lin = new Linea2(arreglo.darElemento(i).darInfraccion());
+						lin.aumentarCantidad();
+						lista.agregar(lin);
+					}
+					else
+					{
+						Linea2 busq = new Linea2(arreglo.darElemento(i).darInfraccion());
+						Linea2 lin = lista.buscar(busq);
+						if(lin == null)
+						{
+							busq.aumentarCantidad();
+							lista.agregarEnOrdenA(busq, compxInfr);
+						}
+						else
+						{
+							lin.aumentarCantidad();
+							lista.agregarEnOrdenA(lin, compxInfr);
+						}
+					}
+				}
+			}
+		}
+		
+		return lista;
+	}
+	
+	public ListaEncadenada darNMayoresInfracc(int N, String fechaMin, String fechaMax)
+	{
+		ListaEncadenada<Linea2> lista = new ListaEncadenada<Linea2>();
+		ListaEncadenada<Linea2> rta = new ListaEncadenada<Linea2>();
 		for(int i = 0; i < arreglo.darTamano(); i++)
 		{
 			if((arreglo.darElemento(i).darFecha().compareTo(fechaMin) > 0 && arreglo.darElemento(i).darFecha().compareTo(fechaMax) <0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMin) == 0)||(arreglo.darElemento(i).darFecha().compareTo(fechaMax)==0))  
@@ -186,23 +214,36 @@ public class Modelo {
 					if(lin == null)
 					{
 						busq.aumentarCantidad();
-						lista.agregarEnOrden(busq, compxInfr);
+						lista.agregar(busq);
 					}
 					else
 					{
 						lin.aumentarCantidad();
-						lista.agregarEnOrden(lin, compxInfr);
+						lista.agregar(lin);
 					}
 				}
 			}
 		}
+		for(int i = 0; i < N; i++)
+		{
+			NodoLista<Linea2> mayor = lista.darPrimero();
+			NodoLista<Linea2> nodo = lista.darPrimero();
+			int mayorCantidad = 0;
+			for(int j = 0; j < lista.darTamano(); j++)
+			{
+				if(nodo.darElemento().darCantidad()>mayorCantidad)
+				{
+					mayor = nodo;
+					mayorCantidad = nodo.darElemento().darCantidad();
+				}
+				nodo = nodo.darSiguiente();
+			}
+			rta.agregar(mayor.darElemento());
+			lista.eliminar(mayor.darElemento());
+		}
 		
-		return lista;
-	}
-	
-	public IArregloDinamico darNMayoresInfracc(int N, String fechaMin, String fechaMax)
-	{
-		return null;
+		
+		return rta;
 	}
 	
 	public IArregloDinamico darHist(){

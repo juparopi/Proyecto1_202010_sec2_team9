@@ -2,6 +2,8 @@ package model.data_structures;
 
 import java.util.Comparator;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import model.logic.Comparendo;
 
 /**
@@ -50,7 +52,7 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
                tamano++;
        }
 		
-		public void agregarEnOrden(T dato, Comparator<T> comparador)
+		public void agregarEnOrdenA(T dato, Comparator<T> comparador)
 		{
 			NodoLista<T> nuevo = new NodoLista<T>(dato);
             if(primero == null)
@@ -61,28 +63,38 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
             else
             {
             	boolean agregado = false;
-            	NodoLista<T> nodo = primero;
-         	   	while(nodo.darSiguiente() != null)
-         	   	{
-         	   		if(comparador.compare(nodo.darSiguiente().darElemento(), dato) <0 )
-         	   		{
-         	   			nodo = nodo.darSiguiente();
-         	   		}
-         	   		else
-         	   		{
-         	   			nuevo.cambiarSiguiente(nodo.darSiguiente());
-         	   			nodo.cambiarSiguiente(nuevo);
-         	   			agregado = true;
-         	   			break;
-         	   		}
-         	   	}
-         	   	if(agregado == false)
-         	   	{
-         	   		nodo.cambiarSiguiente(nuevo);
-         	   	}
+            	if(comparador.compare(primero.darElemento(), nuevo.darElemento()) >0)
+            	{
+            		nuevo.cambiarSiguiente(primero);
+            		primero = nuevo;
+            		agregado = true;
+            	}
+            	else
+            	{
+            		NodoLista<T> actual = primero;
+            		while(actual.darSiguiente()!=null)
+            		{
+            			if(comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())>0)
+            			{
+            				nuevo.cambiarSiguiente(actual.darSiguiente());
+            				actual.cambiarSiguiente(nuevo);
+            				agregado = true;
+            			}
+            			else
+            			{
+            				actual = actual.darSiguiente();
+            			}
+            		}
+            	}
+            	if(agregado == false)
+            	{
+            		ultimo.cambiarSiguiente(nuevo);
+            		ultimo = ultimo.darSiguiente();
+            	}
             }
             tamano++;
 		}
+		
 
 		public NodoLista<T> darPrimero() 
 		{

@@ -111,4 +111,11 @@ public class Comparendo implements Comparable<Comparendo>
 		}	
 	}
 	
+	public static class ComparadorCompxCodigo implements Comparator<Comparendo>
+	{
+		public int compare(Comparendo comp1, Comparendo comp2){
+			return comp1.darInfraccion().compareTo(comp2.darInfraccion());
+		}
+	}
+	
 }

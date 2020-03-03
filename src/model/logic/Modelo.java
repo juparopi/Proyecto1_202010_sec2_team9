@@ -5,6 +5,7 @@ import java.util.Comparator;
 import com.sun.javafx.geom.Area;
 import com.sun.media.sound.AlawCodec;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
@@ -87,31 +88,51 @@ public class Modelo {
 	//Comparendos por llenar
 	
 	public Comparendo darPrimerComparendoXLocalidad(String localidad){
+		for(int i = 0; i < arreglo.darTamano(); i ++ )
+			if(arreglo.darElemento(i).darLocalidad().equalsIgnoreCase(localidad))
+				return arreglo.darElemento(i);
+		
 		return null;
 	}
 	
-	public IArregloDinamico darComparendosXLocalidad(String localidad){
-		return null;
+	public ListaEncadenada<Comparendo> darComparendosXFecha(String fecha){
+		ListaEncadenada<Comparendo> lista = new ListaEncadenada<Comparendo>();
+		Comparendo.ComparadorCompxCodigo compxCod = new Comparendo.ComparadorCompxCodigo();
+		for(int i = 0; i < arreglo.darTamano(); i++){
+			if(arreglo.darElemento(i).darFecha().equalsIgnoreCase(fecha))
+				lista.agregarEnOrden(arreglo.darElemento(i), compxCod);
+		}
+			
+		return lista;
 	}
 	
-	public IArregloDinamico compararComparendosXFecha(String fecha1, String fecha2){
-		return null;
+	public ListaEncadenada<Comparendo> darComparendosXLocalidad(String loc){
+		ListaEncadenada<Comparendo> lista = new ListaEncadenada<Comparendo>();
+		Comparendo.ComparadorCompxFecha compxFech = new Comparendo.ComparadorCompxFecha();
+		for(int i = 0; i < arreglo.darCapacidad();i++)
+		{
+			if(arreglo.darElemento(i).darLocalidad().equals(loc))
+			{
+				lista.agregarEnOrden(arreglo.darElemento(i), compxFech);
+			}
+		}
+		
+		return lista;
 	}
 
 
 	
 	public Comparendo darPrimerComparendoXInfracc(String infracc)
 	{
-		Comparendo rta = null;
 		for(int i = 0; i < arreglo.darCapacidad();i++)
 		{
 			
 			if(arreglo.darElemento(i).darInfraccion().equals(infracc))
 			{
-				rta = arreglo.darElemento(i);
+				return arreglo.darElemento(i);
 			}
 		}
-		return rta;
+		return null;
 	}
 	public ListaEncadenada darComparendosXInfracc(String infracc)
 	{

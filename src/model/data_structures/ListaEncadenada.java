@@ -72,10 +72,11 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
             	else
             	{
             		NodoLista<T> actual = primero;
-            		while(actual.darSiguiente()!=null)
+            		while(actual.darSiguiente()!=null && agregado == false)
             		{
-            			if(comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())>0)
+            			if((comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())>0)|| (comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())==0))
             			{
+            				System.out.println("entra");
             				nuevo.cambiarSiguiente(actual.darSiguiente());
             				actual.cambiarSiguiente(nuevo);
             				agregado = true;
@@ -115,9 +116,9 @@ public class  ListaEncadenada<T extends Comparable<T>> implements IListaEncadena
             	else
             	{
             		NodoLista<T> actual = primero;
-            		while(actual.darSiguiente()!=null)
+            		while(actual.darSiguiente()!=null && agregado == false)
             		{
-            			if(comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())<0)
+            			if((comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())<0)|| (comparador.compare(actual.darSiguiente().darElemento(), nuevo.darElemento())==0))
             			{
             				nuevo.cambiarSiguiente(actual.darSiguiente());
             				actual.cambiarSiguiente(nuevo);
